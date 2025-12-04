@@ -221,9 +221,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function revealImplicitConstraints(params: ConstraintRevealerParams): ConstraintRevealerResponse {
-  const session = ensureSession();
-  setCurrentMode("constraint_revealer");
+export async function revealImplicitConstraints(params: ConstraintRevealerParams): Promise<ConstraintRevealerResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("constraint_revealer");
 
   const intensity = session.intensity_coefficient;
   const {

@@ -190,9 +190,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function activatePrismaticPerspective(params: PrismaticPerspectiveParams): PrismaticPerspectiveResponse {
-  const session = ensureSession();
-  setCurrentMode("prismatic_perspective");
+export async function activatePrismaticPerspective(params: PrismaticPerspectiveParams): Promise<PrismaticPerspectiveResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("prismatic_perspective");
 
   const intensity = session.intensity_coefficient;
   const {

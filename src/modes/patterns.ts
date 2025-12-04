@@ -190,9 +190,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function amplifyPatternRecognition(params: PatternAmplificationParams): PatternAmplificationResponse {
-  const session = ensureSession();
-  setCurrentMode("pattern_amplification");
+export async function amplifyPatternRecognition(params: PatternAmplificationParams): Promise<PatternAmplificationResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("pattern_amplification");
 
   const intensity = session.intensity_coefficient;
   const { pattern_types, focus_allocation } = params;

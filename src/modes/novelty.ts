@@ -196,9 +196,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function applyNoveltyBias(params: NoveltyBiasParams): NoveltyBiasResponse {
-  const session = ensureSession();
-  setCurrentMode("novelty_bias");
+export async function applyNoveltyBias(params: NoveltyBiasParams): Promise<NoveltyBiasResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("novelty_bias");
 
   const intensity = session.intensity_coefficient;
   const {

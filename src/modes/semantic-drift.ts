@@ -175,9 +175,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function navigateSemanticDrift(params: SemanticDriftParams): SemanticDriftResponse {
-  const session = ensureSession();
-  setCurrentMode("semantic_drift");
+export async function navigateSemanticDrift(params: SemanticDriftParams): Promise<SemanticDriftResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("semantic_drift");
 
   const intensity = session.intensity_coefficient;
   const { origin_concept, drift_mode = "explore", anchor_strength } = params;

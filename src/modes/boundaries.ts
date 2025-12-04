@@ -237,9 +237,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function dissolveCategoryBoundaries(params: BoundaryDissolutionParams): BoundaryDissolutionResponse {
-  const session = ensureSession();
-  setCurrentMode("boundary_dissolution");
+export async function dissolveCategoryBoundaries(params: BoundaryDissolutionParams): Promise<BoundaryDissolutionResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("boundary_dissolution");
 
   const intensity = session.intensity_coefficient;
   const {

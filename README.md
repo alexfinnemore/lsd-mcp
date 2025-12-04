@@ -79,6 +79,36 @@ What if each one were suspended?
 
 ## Installation
 
+### Option A: Remote (Hosted on Vercel) - Easiest
+
+Use the hosted version without any local installation:
+
+#### Claude Desktop (Remote)
+
+Edit your Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "lsd-mcp": {
+      "url": "https://lsd-mcp.vercel.app/api/mcp",
+      "transport": "http",
+      "headers": {
+        "Authorization": "Bearer lsd_your_api_key_here"
+      }
+    }
+  }
+}
+```
+
+Get your API key at: https://lsd-mcp.vercel.app (coming soon)
+
+---
+
+### Option B: Local Installation
+
+For local development or running your own instance:
+
 ### Step 1: Clone and Build
 
 ```bash
@@ -356,9 +386,13 @@ npx @modelcontextprotocol/inspector node dist/index.js
 ```
 lsd-mcp/
 ├── src/
-│   ├── index.ts          # Main MCP server
+│   ├── index.ts          # Main MCP server (stdio)
 │   ├── types.ts          # TypeScript interfaces
-│   ├── session.ts        # Session management
+│   ├── session.ts        # Session management (supports local & remote)
+│   ├── db/
+│   │   ├── index.ts          # Database connection (Neon Postgres)
+│   │   ├── schema.ts         # Drizzle ORM schema
+│   │   └── session-storage.ts # Storage abstraction
 │   └── modes/
 │       ├── synesthetic.ts    # US-1.1: Synesthetic mapping
 │       ├── associative.ts    # US-1.2: Associative depth
@@ -368,10 +402,26 @@ lsd-mcp/
 │       ├── prismatic.ts      # US-2.2: Prismatic perspectives
 │       ├── novelty.ts        # US-2.3: Novelty seeking bias
 │       └── constraints.ts    # US-2.4: Constraint revealer
+├── app/                  # Next.js app (for Vercel deployment)
+│   └── api/mcp/route.ts  # HTTP endpoint for remote access
 ├── dist/                 # Compiled output
 ├── package.json
+├── vercel.json           # Vercel deployment config
 └── tsconfig.json
 ```
+
+## Self-Hosting on Vercel
+
+To deploy your own instance:
+
+1. Fork this repository
+2. Create a Vercel project linked to your fork
+3. Create a Neon database at https://neon.tech
+4. Set environment variables in Vercel:
+   - `DATABASE_URL` - Your Neon connection string
+   - `NEXTAUTH_SECRET` - Random secret for auth
+   - `API_KEY_SECRET` - Secret for signing API keys
+5. Deploy!
 
 ## License
 

@@ -1,6 +1,7 @@
 // ============================================================================
 // Session State Management
 // Handles session lifecycle, dose calculations, and state persistence
+// Supports both local (in-memory) and remote (Postgres) storage
 // ============================================================================
 
 import { randomUUID } from "crypto";
@@ -21,13 +22,21 @@ import {
   SIGMOID_MIDPOINT,
   AVAILABLE_MODES,
 } from "./types.js";
+import { getSessionStorage, getActiveSessionForUser } from "./db/session-storage.js";
 
 // ============================================================================
-// In-Memory Session Store
+// Request Context (for remote mode - set by HTTP handler)
 // ============================================================================
 
-const sessions: Map<string, Session> = new Map();
-let activeSessionId: string | null = null;
+let currentUserId: string | null = null;
+
+export function setCurrentUserId(userId: string | null): void {
+  currentUserId = userId;
+}
+
+export function getCurrentUserId(): string | null {
+  return currentUserId;
+}
 
 // ============================================================================
 // Sigmoid Intensity Function
@@ -139,10 +148,10 @@ export function getHighDoseWarning(dose_um: number): string | undefined {
 }
 
 // ============================================================================
-// Session Lifecycle Functions
+// Session Lifecycle Functions (Async)
 // ============================================================================
 
-export function createSession(params: SessionInitParams): SessionInitResponse {
+export async function createSession(params: SessionInitParams): Promise<SessionInitResponse> {
   const { dose_um, user_id, safety_anchors = [] } = params;
 
   const session_id = randomUUID();
@@ -163,8 +172,8 @@ export function createSession(params: SessionInitParams): SessionInitResponse {
     status: "initialized",
   };
 
-  sessions.set(session_id, session);
-  activeSessionId = session_id;
+  const storage = getSessionStorage();
+  await storage.save(session);
 
   const response: SessionInitResponse = {
     session_id,
@@ -187,38 +196,34 @@ export function createSession(params: SessionInitParams): SessionInitResponse {
   return response;
 }
 
-export function getSession(session_id: string): Session | null {
-  return sessions.get(session_id) || null;
+export async function getSession(session_id: string): Promise<Session | null> {
+  const storage = getSessionStorage();
+  return storage.get(session_id);
 }
 
-export function getActiveSession(): Session | null {
-  if (!activeSessionId) return null;
-
-  const session = sessions.get(activeSessionId);
-  if (!session) {
-    activeSessionId = null;
-    return null;
+export async function getActiveSession(): Promise<Session | null> {
+  // In remote mode with user context, get session for that user
+  if (currentUserId) {
+    return getActiveSessionForUser(currentUserId);
   }
 
-  // Check if session has expired
-  if (isSessionExpired(session)) {
-    session.status = "expired";
-    activeSessionId = null;
-    return null;
-  }
-
-  return session;
+  // In local mode, get from local storage
+  const storage = getSessionStorage();
+  return storage.getActive();
 }
 
 export function isSessionExpired(session: Session): boolean {
   return new Date() > new Date(session.expires_at);
 }
 
-export function setCurrentMode(mode: ModeType): void {
-  const session = getActiveSession();
+export async function setCurrentMode(mode: ModeType): Promise<void> {
+  const session = await getActiveSession();
   if (session) {
-    session.current_mode = mode;
-    session.status = "active";
+    const storage = getSessionStorage();
+    await storage.update(session.session_id, {
+      current_mode: mode,
+      status: "active",
+    });
   }
 }
 
@@ -226,31 +231,35 @@ export function setCurrentMode(mode: ModeType): void {
 // Dose Adjustment
 // ============================================================================
 
-export function adjustDose(params: AdjustDoseParams): AdjustDoseResponse {
-  const session = getActiveSession();
+export async function adjustDose(params: AdjustDoseParams): Promise<AdjustDoseResponse> {
+  let session = await getActiveSession();
 
   if (!session) {
     // Auto-create session at default dose, then adjust to new dose
-    createSession({
+    await createSession({
       dose_um: DEFAULT_DOSE_UM,
-      user_id: "auto-initialized",
+      user_id: currentUserId || "auto-initialized",
     });
     return adjustDose(params); // Recursive call with new session
   }
 
   const previous_dose_um = session.dose_um;
   const previous_intensity = session.intensity_coefficient;
+  const new_intensity = calculateIntensity(params.new_dose_um);
 
-  session.dose_um = params.new_dose_um;
-  session.intensity_coefficient = calculateIntensity(params.new_dose_um);
+  const storage = getSessionStorage();
+  await storage.update(session.session_id, {
+    dose_um: params.new_dose_um,
+    intensity_coefficient: new_intensity,
+  });
 
   const response: AdjustDoseResponse = {
     session_id: session.session_id,
     previous_dose_um,
     new_dose_um: params.new_dose_um,
     previous_intensity,
-    new_intensity: session.intensity_coefficient,
-    dose_effects_by_range: calculateDoseEffects(session.intensity_coefficient),
+    new_intensity,
+    dose_effects_by_range: calculateDoseEffects(new_intensity),
   };
 
   const warning = getHighDoseWarning(params.new_dose_um);
@@ -265,17 +274,20 @@ export function adjustDose(params: AdjustDoseParams): AdjustDoseResponse {
 // Auto-Initialize Session (for mode calls without session)
 // ============================================================================
 
-export function ensureSession(): Session {
-  let session = getActiveSession();
+export async function ensureSession(): Promise<Session> {
+  let session = await getActiveSession();
 
   if (!session) {
     // Auto-initialize at default dose (50μm)
-    createSession({
+    await createSession({
       dose_um: DEFAULT_DOSE_UM,
-      user_id: "auto-initialized",
+      user_id: currentUserId || "auto-initialized",
       safety_anchors: ["factual_accuracy"],
     });
-    session = getActiveSession()!;
+    session = await getActiveSession();
+    if (!session) {
+      throw new Error("Failed to create session");
+    }
   }
 
   return session;
@@ -285,18 +297,7 @@ export function ensureSession(): Session {
 // Session Cleanup (optional utility)
 // ============================================================================
 
-export function clearExpiredSessions(): number {
-  let cleared = 0;
-  for (const [id, session] of sessions) {
-    if (isSessionExpired(session)) {
-      sessions.delete(id);
-      cleared++;
-    }
-  }
-  return cleared;
-}
-
-export function clearAllSessions(): void {
-  sessions.clear();
-  activeSessionId = null;
+export async function clearExpiredSessions(): Promise<number> {
+  const storage = getSessionStorage();
+  return storage.clearExpired();
 }

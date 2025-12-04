@@ -445,7 +445,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       // ========================================
       case "initialize_session": {
         const params = args as unknown as SessionInitParams;
-        const result = createSession(params);
+        const result = await createSession(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -453,7 +453,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "adjust_dose": {
         const params = args as unknown as AdjustDoseParams;
-        const result = adjustDose(params);
+        const result = await adjustDose(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -464,7 +464,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       // ========================================
       case "activate_synesthetic_mode": {
         const params = args as unknown as SynestheticModeParams;
-        const result = activateSynestheticMode(params);
+        const result = await activateSynestheticMode(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -472,7 +472,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "set_associative_depth": {
         const params = args as unknown as AssociativeDepthParams;
-        const result = setAssociativeDepth(params);
+        const result = await setAssociativeDepth(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -480,7 +480,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "dissolve_category_boundaries": {
         const params = args as unknown as BoundaryDissolutionParams;
-        const result = dissolveCategoryBoundaries(params);
+        const result = await dissolveCategoryBoundaries(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -488,7 +488,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "amplify_pattern_recognition": {
         const params = args as unknown as PatternAmplificationParams;
-        const result = amplifyPatternRecognition(params);
+        const result = await amplifyPatternRecognition(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -499,7 +499,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       // ========================================
       case "navigate_semantic_drift": {
         const params = args as unknown as SemanticDriftParams;
-        const result = navigateSemanticDrift(params);
+        const result = await navigateSemanticDrift(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -507,7 +507,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "activate_prismatic_perspective": {
         const params = args as unknown as PrismaticPerspectiveParams;
-        const result = activatePrismaticPerspective(params);
+        const result = await activatePrismaticPerspective(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -515,7 +515,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "apply_novelty_bias": {
         const params = args as unknown as NoveltyBiasParams;
-        const result = applyNoveltyBias(params);
+        const result = await applyNoveltyBias(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };
@@ -523,7 +523,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       case "reveal_implicit_constraints": {
         const params = args as unknown as ConstraintRevealerParams;
-        const result = revealImplicitConstraints(params);
+        const result = await revealImplicitConstraints(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };

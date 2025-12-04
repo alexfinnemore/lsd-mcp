@@ -145,9 +145,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function activateSynestheticMode(params: SynestheticModeParams): SynestheticModeResponse {
-  const session = ensureSession();
-  setCurrentMode("synesthetic_mapping");
+export async function activateSynestheticMode(params: SynestheticModeParams): Promise<SynestheticModeResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("synesthetic_mapping");
 
   const intensity = session.intensity_coefficient;
   const {

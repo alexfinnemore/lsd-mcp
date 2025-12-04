@@ -187,9 +187,9 @@ function getCognitiveState(intensity: number): string | undefined {
 // Main Mode Activation Function
 // ============================================================================
 
-export function setAssociativeDepth(params: AssociativeDepthParams): AssociativeDepthResponse {
-  const session = ensureSession();
-  setCurrentMode("associative_depth");
+export async function setAssociativeDepth(params: AssociativeDepthParams): Promise<AssociativeDepthResponse> {
+  const session = await ensureSession();
+  await setCurrentMode("associative_depth");
 
   const intensity = session.intensity_coefficient;
   const { mode, association_distance } = params;

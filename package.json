@@ -6,7 +6,12 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js"
+    "build:vercel": "tsc && next build",
+    "start": "node dist/index.js",
+    "start:local": "node dist/index.js",
+    "dev": "next dev",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push"
   },
   "keywords": [
     "mcp",
@@ -16,10 +21,17 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.2.0"
+    "@modelcontextprotocol/sdk": "^1.2.0",
+    "@neondatabase/serverless": "^1.0.2",
+    "drizzle-orm": "^0.45.0",
+    "next": "^16.0.7",
+    "next-auth": "^5.0.0-beta.30",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "drizzle-kit": "^0.31.8",
     "typescript": "^5.0.0"
   }
 }
