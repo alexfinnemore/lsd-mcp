@@ -88,7 +88,11 @@ export type ModeType =
   | "synesthetic_mapping"
   | "associative_depth"
   | "boundary_dissolution"
-  | "pattern_amplification";
+  | "pattern_amplification"
+  | "semantic_drift"
+  | "prismatic_perspective"
+  | "novelty_bias"
+  | "constraint_revealer";
 
 // ============================================================================
 // US-1.1: Synesthetic Mode Types
@@ -224,4 +228,117 @@ export const AVAILABLE_MODES: ModeType[] = [
   "associative_depth",
   "boundary_dissolution",
   "pattern_amplification",
+  "semantic_drift",
+  "prismatic_perspective",
+  "novelty_bias",
+  "constraint_revealer",
 ];
+
+// ============================================================================
+// US-2.1: Semantic Drift Types
+// ============================================================================
+
+export type DriftMode = "spiral" | "explore";
+
+export interface SemanticDriftParams {
+  origin_concept: string;
+  drift_mode?: DriftMode;
+  anchor_strength?: number; // 0.0-1.0
+}
+
+export interface SemanticDriftResponse {
+  mode: "semantic_drift";
+  effective_intensity: number;
+  directive: string;
+  origin_concept: string;
+  drift_mode: DriftMode;
+  effective_anchor_strength: number;
+  drift_distance: string;
+  return_tendency: string;
+  conceptual_territory: string;
+  cognitive_state?: string;
+  example: string;
+  warning?: string;
+}
+
+// ============================================================================
+// US-2.2: Prismatic Perspective Types
+// ============================================================================
+
+export interface PrismaticPerspectiveParams {
+  frameworks: string[];
+  maintain_contradictions?: boolean;
+  perspective_count?: number;
+}
+
+export interface PrismaticPerspectiveResponse {
+  mode: "prismatic_perspective";
+  effective_intensity: number;
+  directive: string;
+  active_frameworks: string[];
+  maintain_contradictions: boolean;
+  perspective_count: number;
+  contradiction_tolerance: string;
+  resolution_prohibition: string;
+  cognitive_state?: string;
+  example: string;
+  warning?: string;
+}
+
+// ============================================================================
+// US-2.3: Novelty Bias Types
+// ============================================================================
+
+export type NoveltyLabel = "conventional" | "unusual" | "untested" | "speculative" | "radical";
+
+export interface NoveltyBiasParams {
+  exploration_weight?: number; // 0.0-1.0
+  familiarity_penalty?: number; // 0.0-1.0
+  minimum_surprise?: number; // 0.0-1.0
+}
+
+export interface NoveltyBiasResponse {
+  mode: "novelty_bias";
+  effective_intensity: number;
+  directive: string;
+  effective_exploration_weight: number;
+  effective_familiarity_penalty: number;
+  effective_minimum_surprise: number;
+  novelty_threshold: NoveltyLabel;
+  filtering_strength: string;
+  cognitive_state?: string;
+  example: string;
+  warning?: string;
+}
+
+// ============================================================================
+// US-2.4: Constraint Revealer Types
+// ============================================================================
+
+export type ConstraintType =
+  | "temporal"
+  | "spatial"
+  | "cultural"
+  | "logical"
+  | "physical"
+  | "perceptual";
+
+export interface ConstraintRevealerParams {
+  domain: string;
+  constraint_types?: ConstraintType[];
+  suspension_depth?: number; // 0.0-1.0
+}
+
+export interface ConstraintRevealerResponse {
+  mode: "constraint_revealer";
+  effective_intensity: number;
+  directive: string;
+  domain: string;
+  active_constraint_types: ConstraintType[];
+  effective_suspension_depth: number;
+  constraint_visibility: string;
+  suspension_strategy: string;
+  cognitive_state?: string;
+  example: string;
+  warning?: string;
+}

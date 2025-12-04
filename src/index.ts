@@ -18,11 +18,17 @@ import {
   getActiveSession,
 } from "./session.js";
 
-// Mode implementations
+// Mode implementations - Batch 1
 import { activateSynestheticMode } from "./modes/synesthetic.js";
 import { setAssociativeDepth } from "./modes/associative.js";
 import { dissolveCategoryBoundaries } from "./modes/boundaries.js";
 import { amplifyPatternRecognition } from "./modes/patterns.js";
+
+// Mode implementations - Batch 2
+import { navigateSemanticDrift } from "./modes/semantic-drift.js";
+import { activatePrismaticPerspective } from "./modes/prismatic.js";
+import { applyNoveltyBias } from "./modes/novelty.js";
+import { revealImplicitConstraints } from "./modes/constraints.js";
 
 // Types
 import type {
@@ -32,6 +38,10 @@ import type {
   AssociativeDepthParams,
   BoundaryDissolutionParams,
   PatternAmplificationParams,
+  SemanticDriftParams,
+  PrismaticPerspectiveParams,
+  NoveltyBiasParams,
+  ConstraintRevealerParams,
 } from "./types.js";
 
 // ============================================================================
@@ -262,6 +272,161 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["pattern_types"],
         },
       },
+
+      // ========================================
+      // US-2.1: Semantic Drift Navigator
+      // ========================================
+      {
+        name: "navigate_semantic_drift",
+        description:
+          "Navigate through associative concept space with controlled drift from origin. " +
+          "At low doses: gentle tangent-following, staying near origin concept. " +
+          "At high doses: origin becomes irrelevant, exploring infinite conceptual space. " +
+          "Use when stuck in conventional thinking or seeking unexpected connections.",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            origin_concept: {
+              type: "string",
+              description: "The starting concept/idea to drift from",
+            },
+            drift_mode: {
+              type: "string",
+              enum: ["spiral", "explore"],
+              description:
+                "Drift pattern: spiral (widening circles) or explore (free wandering). Default: explore",
+            },
+            anchor_strength: {
+              type: "number",
+              minimum: 0,
+              maximum: 1,
+              description:
+                "How strongly to maintain connection to origin (0-1). Higher intensity reduces this.",
+            },
+          },
+          required: ["origin_concept"],
+        },
+      },
+
+      // ========================================
+      // US-2.2: Prismatic Perspective Engine
+      // ========================================
+      {
+        name: "activate_prismatic_perspective",
+        description:
+          "Present multiple contradictory expert frameworks simultaneously WITHOUT resolving tension. " +
+          "At low doses: note contradictions, may offer synthesis. " +
+          "At high doses: contradictions are features, resolution is forbidden. " +
+          "Use for difficult decisions or teaching complex topics with no single correct view.",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            frameworks: {
+              type: "array",
+              items: { type: "string" },
+              description:
+                "Disciplines, worldviews, or expert frameworks to channel (e.g., ['physicist', 'mystic', 'economist'])",
+            },
+            maintain_contradictions: {
+              type: "boolean",
+              description:
+                "If true, explicitly forbid resolving contradictions. Default: true",
+            },
+            perspective_count: {
+              type: "integer",
+              minimum: 2,
+              maximum: 10,
+              description:
+                "Number of distinct viewpoints to generate. Default scales with intensity.",
+            },
+          },
+          required: ["frameworks"],
+        },
+      },
+
+      // ========================================
+      // US-2.3: Novelty Seeking Bias
+      // ========================================
+      {
+        name: "apply_novelty_bias",
+        description:
+          "Penalize conventional solutions and surface unexplored approaches. " +
+          "At low doses: highlight novel alternatives alongside familiar ones. " +
+          "At high doses: conventional ideas rejected, only weird survives. " +
+          "Outputs labeled: [CONVENTIONAL], [UNUSUAL], [UNTESTED], [SPECULATIVE], [RADICAL].",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            exploration_weight: {
+              type: "number",
+              minimum: 0,
+              maximum: 1,
+              description:
+                "Weight toward exploration vs exploitation (0-1). Higher = more novel. Default scales with intensity.",
+            },
+            familiarity_penalty: {
+              type: "number",
+              minimum: 0,
+              maximum: 1,
+              description:
+                "How aggressively to penalize familiar ideas (0-1). Default scales with intensity.",
+            },
+            minimum_surprise: {
+              type: "number",
+              minimum: 0,
+              maximum: 1,
+              description:
+                "Minimum surprise threshold for ideas to pass filter (0-1). Default scales with intensity.",
+            },
+          },
+          required: [],
+        },
+      },
+
+      // ========================================
+      // US-2.4: Implicit Constraint Revealer
+      // ========================================
+      {
+        name: "reveal_implicit_constraints",
+        description:
+          "Surface hidden assumptions embedded in problem statements and suspend them. " +
+          "At low doses: identify 2-3 obvious assumptions. " +
+          "At high doses: all constraints visible including axiomatic ones, logic itself optional. " +
+          "Use when feeling stuck or wanting to challenge organizational/personal assumptions.",
+        inputSchema: {
+          type: "object" as const,
+          properties: {
+            domain: {
+              type: "string",
+              description: "The problem area or question to analyze for hidden constraints",
+            },
+            constraint_types: {
+              type: "array",
+              items: {
+                type: "string",
+                enum: [
+                  "temporal",
+                  "spatial",
+                  "cultural",
+                  "logical",
+                  "physical",
+                  "perceptual",
+                ],
+              },
+              description:
+                "Which types of constraints to look for. Default: all types.",
+            },
+            suspension_depth: {
+              type: "number",
+              minimum: 0,
+              maximum: 1,
+              description:
+                "How deeply to suspend identified constraints (0-1). Default scales with intensity.",
+            },
+          },
+          required: ["domain"],
+        },
+      },
     ],
   };
 });
@@ -324,6 +489,41 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "amplify_pattern_recognition": {
         const params = args as unknown as PatternAmplificationParams;
         const result = amplifyPatternRecognition(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      // ========================================
+      // Batch 2: Novelty & Discovery Tools
+      // ========================================
+      case "navigate_semantic_drift": {
+        const params = args as unknown as SemanticDriftParams;
+        const result = navigateSemanticDrift(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "activate_prismatic_perspective": {
+        const params = args as unknown as PrismaticPerspectiveParams;
+        const result = activatePrismaticPerspective(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "apply_novelty_bias": {
+        const params = args as unknown as NoveltyBiasParams;
+        const result = applyNoveltyBias(params);
+        return {
+          content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        };
+      }
+
+      case "reveal_implicit_constraints": {
+        const params = args as unknown as ConstraintRevealerParams;
+        const result = revealImplicitConstraints(params);
         return {
           content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
         };

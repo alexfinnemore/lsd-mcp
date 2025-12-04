@@ -49,6 +49,34 @@ mode with spatial and tactile senses. Describe how a REST API works - let
 the metaphors flow naturally.
 ```
 
+### 🧭 Semantic Wandering (Batch 2)
+```
+Initialize lsd-mcp at 250μm. Use navigate_semantic_drift with origin_concept
+"breakfast" and drift_mode "spiral". Let's see where breakfast takes us when
+we're not trying to stay on topic.
+```
+
+### 🔷 Contradictory Wisdom (Batch 2)
+```
+Start lsd-mcp at 200μm. Activate prismatic_perspective with frameworks:
+["physicist", "poet", "economist", "mystic"]. Now have them all discuss:
+"What is the nature of time?" Don't resolve their disagreements.
+```
+
+### 🦄 Give Me The Weird Ideas (Batch 2)
+```
+Initialize lsd-mcp at 300μm. Apply novelty_bias mode. Now answer: "How should
+I organize my company's engineering team?" But I only want the ideas that
+would make a traditional manager uncomfortable.
+```
+
+### 🔓 Hidden Assumptions (Batch 2)
+```
+Start lsd-mcp at 200μm. Use reveal_implicit_constraints on domain: "I need
+to hire more engineers to ship faster." What constraints am I not seeing?
+What if each one were suspended?
+```
+
 ## Installation
 
 ### Step 1: Clone and Build
@@ -217,6 +245,72 @@ Enhances pattern detection and elaboration.
 
 Pattern types: `fractals`, `recursion`, `paradox`, `symmetry`, `cycles`, `emergence`, `strange_loops`, `self_reference`
 
+### Novelty & Discovery Tools (Batch 2)
+
+#### `navigate_semantic_drift` (US-2.1)
+Guides associative exploration with controlled drift from origin concept.
+
+```json
+{
+  "origin_concept": "breakfast",
+  "drift_mode": "spiral",
+  "anchor_strength": 0.3
+}
+```
+
+Modes:
+- **spiral**: Widening circles around origin
+- **explore**: Free wandering through concept space
+
+**At 80μm:** Gentle tangent-following, staying near origin
+**At 400μm:** Origin irrelevant, exploring infinite conceptual space
+
+#### `activate_prismatic_perspective` (US-2.2)
+Presents contradictory expert frameworks WITHOUT resolving tension.
+
+```json
+{
+  "frameworks": ["physicist", "mystic", "economist"],
+  "maintain_contradictions": true,
+  "perspective_count": 4
+}
+```
+
+**At 100μm:** Note contradictions, may offer synthesis
+**At 300μm:** Contradictions are features, resolution forbidden
+
+#### `apply_novelty_bias` (US-2.3)
+Penalizes conventional solutions; surfaces unexplored approaches.
+
+```json
+{
+  "exploration_weight": 0.8,
+  "familiarity_penalty": 0.6,
+  "minimum_surprise": 0.7
+}
+```
+
+Outputs labeled: `[CONVENTIONAL]`, `[UNUSUAL]`, `[UNTESTED]`, `[SPECULATIVE]`, `[RADICAL]`
+
+**At 100μm:** Novel alternatives highlighted alongside familiar
+**At 400μm:** Conventional ideas rejected, only weird survives
+
+#### `reveal_implicit_constraints` (US-2.4)
+Surfaces hidden assumptions embedded in problem statements.
+
+```json
+{
+  "domain": "I need to hire more engineers to ship faster",
+  "constraint_types": ["temporal", "cultural", "logical"],
+  "suspension_depth": 0.7
+}
+```
+
+Constraint types: `temporal`, `spatial`, `cultural`, `logical`, `physical`, `perceptual`
+
+**At 100μm:** Identify 2-3 obvious assumptions
+**At 400μm:** All constraints visible, logic itself optional
+
 ## Dose Guidelines
 
 ### Creative Exploration (100-150μm)
@@ -266,10 +360,14 @@ lsd-mcp/
 │   ├── types.ts          # TypeScript interfaces
 │   ├── session.ts        # Session management
 │   └── modes/
-│       ├── synesthetic.ts    # US-1.1
-│       ├── associative.ts    # US-1.2
-│       ├── boundaries.ts     # US-1.3
-│       └── patterns.ts       # US-1.4
+│       ├── synesthetic.ts    # US-1.1: Synesthetic mapping
+│       ├── associative.ts    # US-1.2: Associative depth
+│       ├── boundaries.ts     # US-1.3: Boundary dissolution
+│       ├── patterns.ts       # US-1.4: Pattern amplification
+│       ├── semantic-drift.ts # US-2.1: Semantic drift navigator
+│       ├── prismatic.ts      # US-2.2: Prismatic perspectives
+│       ├── novelty.ts        # US-2.3: Novelty seeking bias
+│       └── constraints.ts    # US-2.4: Constraint revealer
 ├── dist/                 # Compiled output
 ├── package.json
 └── tsconfig.json
