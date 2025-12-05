@@ -1,7 +1,7 @@
 {
   "name": "lsd-mcp",
   "version": "1.0.0",
-  "description": "MCP server with file operations capabilities",
+  "description": "Dose-Based Cognitive State Modulation Protocol - MCP Server",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -9,21 +9,18 @@
     "build:vercel": "next build",
     "start": "node dist/index.js",
     "start:local": "node dist/index.js",
-    "dev": "next dev",
-    "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push"
+    "dev": "next dev"
   },
   "keywords": [
     "mcp",
     "model-context-protocol",
-    "claude"
+    "claude",
+    "cognitive-modulation"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.2.0",
-    "@neondatabase/serverless": "^1.0.2",
-    "drizzle-orm": "^0.45.0",
     "next": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -31,7 +28,6 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/react": "19.2.7",
-    "drizzle-kit": "^0.31.8",
     "typescript": "^5.0.0"
   }
 }

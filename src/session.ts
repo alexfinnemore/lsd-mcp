@@ -22,7 +22,7 @@ import {
   SIGMOID_MIDPOINT,
   AVAILABLE_MODES,
 } from "./types";
-import { getSessionStorage, getActiveSessionForUser } from "./db/session-storage";
+import { getSessionStorage, getActiveSessionForUser } from "./db/local-storage";
 
 // ============================================================================
 // Request Context (for remote mode - set by HTTP handler)

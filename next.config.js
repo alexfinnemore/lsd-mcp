@@ -1,28 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // External packages for server components (Next.js 14 syntax)
-  experimental: {
-    serverComponentsExternalPackages: [
-      '@modelcontextprotocol/sdk',
-      'drizzle-orm',
-      '@neondatabase/serverless',
-    ],
-  },
-
-  // Skip static generation of error pages - we only care about API routes
+  // Standalone output for Vercel deployment
   output: 'standalone',
 
-  // Ignore TypeScript errors during build
+  // External packages for server components
+  experimental: {
+    serverComponentsExternalPackages: ['@modelcontextprotocol/sdk'],
+  },
+
+  // Skip type checking during build (tsc runs separately)
   typescript: {
     ignoreBuildErrors: true,
   },
 
-  // Ignore ESLint errors during build
+  // Skip linting during build
   eslint: {
     ignoreDuringBuilds: true,
   },
 
-  // Configure headers for MCP endpoint
+  // CORS headers for MCP endpoint
   async headers() {
     return [
       {

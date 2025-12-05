@@ -1,27 +1,19 @@
 // ============================================================================
-// Database Connection for LSD-MCP
-// Neon Serverless Postgres with Drizzle ORM
+// Database Layer - Entry Point
+// ============================================================================
+//
+// This module provides session storage abstraction.
+//
+// For Vercel/serverless: Uses in-memory storage (local-storage.ts)
+//   - Serverless functions are stateless, so in-memory works per-invocation
+//   - Session IDs are passed by clients to track sessions
+//
+// For standalone server with Postgres: Could use postgres-storage.ts
+//   - Currently disabled due to drizzle-orm/webpack ESM compatibility
+//   - To enable: install drizzle-orm, set DATABASE_URL, update imports
+//
 // ============================================================================
 
-// NOTE: Database imports are disabled due to drizzle-orm/webpack incompatibility
-// The session-storage.ts uses in-memory storage when isRemoteMode() returns false
-
-// ============================================================================
-// Check if running in serverless/remote mode
-// ============================================================================
-
-export function isRemoteMode(): boolean {
-  // TODO: Re-enable when drizzle-orm/webpack compatibility is fixed
-  // return !!process.env.DATABASE_URL && !!process.env.VERCEL;
-  return false;
-}
-
-// Placeholder database function - not used when isRemoteMode() returns false
-export function getDb(): never {
-  throw new Error("Database not available - running in local mode");
-}
-
-// Placeholder types - not used when isRemoteMode() returns false
-export const sessions = null as any;
-export type Session = any;
-export type NewSession = any;
+// Export the local storage implementation (no external dependencies)
+export { getSessionStorage, getActiveSessionForUser } from "./local-storage";
+export type { SessionStorage } from "./local-storage";
