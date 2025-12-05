@@ -1,3 +1,6 @@
+// Force dynamic rendering to avoid SSG issues
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <main style={{ padding: "2rem", fontFamily: "system-ui, sans-serif" }}>
