@@ -3,9 +3,10 @@
 // Supports both in-memory (local) and Postgres (remote) storage
 // ============================================================================
 
-import { eq, and, lt } from "drizzle-orm";
-import { getDb, isRemoteMode, sessions, type Session as DbSession, type NewSession } from "./index.js";
-import type { Session } from "../types.js";
+// NOTE: drizzle-orm imports disabled due to webpack compatibility issues
+// import { eq, and, lt } from "drizzle-orm";
+import { getDb, isRemoteMode, sessions, type Session as DbSession, type NewSession } from "./index";
+import type { Session } from "../types";
 
 // ============================================================================
 // In-Memory Storage (for local stdio mode)

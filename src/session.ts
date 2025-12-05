@@ -21,8 +21,8 @@ import {
   SIGMOID_STEEPNESS,
   SIGMOID_MIDPOINT,
   AVAILABLE_MODES,
-} from "./types.js";
-import { getSessionStorage, getActiveSessionForUser } from "./db/session-storage.js";
+} from "./types";
+import { getSessionStorage, getActiveSessionForUser } from "./db/session-storage";
 
 // ============================================================================
 // Request Context (for remote mode - set by HTTP handler)

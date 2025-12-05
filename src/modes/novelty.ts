@@ -7,8 +7,8 @@ import {
   NoveltyBiasParams,
   NoveltyBiasResponse,
   NoveltyLabel,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Effective Parameter Calculations

@@ -2,7 +2,11 @@
 const nextConfig = {
   // External packages for server components (Next.js 14 syntax)
   experimental: {
-    serverComponentsExternalPackages: ['@modelcontextprotocol/sdk'],
+    serverComponentsExternalPackages: [
+      '@modelcontextprotocol/sdk',
+      'drizzle-orm',
+      '@neondatabase/serverless',
+    ],
   },
 
   // Skip static generation of error pages - we only care about API routes

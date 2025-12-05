@@ -15,19 +15,19 @@ import {
   createSession,
   adjustDose,
   setCurrentUserId,
-} from "../../../dist/session.js";
+} from "@/src/session";
 
 // Mode implementations - Batch 1
-import { activateSynestheticMode } from "../../../dist/modes/synesthetic.js";
-import { setAssociativeDepth } from "../../../dist/modes/associative.js";
-import { dissolveCategoryBoundaries } from "../../../dist/modes/boundaries.js";
-import { amplifyPatternRecognition } from "../../../dist/modes/patterns.js";
+import { activateSynestheticMode } from "@/src/modes/synesthetic";
+import { setAssociativeDepth } from "@/src/modes/associative";
+import { dissolveCategoryBoundaries } from "@/src/modes/boundaries";
+import { amplifyPatternRecognition } from "@/src/modes/patterns";
 
 // Mode implementations - Batch 2
-import { navigateSemanticDrift } from "../../../dist/modes/semantic-drift.js";
-import { activatePrismaticPerspective } from "../../../dist/modes/prismatic.js";
-import { applyNoveltyBias } from "../../../dist/modes/novelty.js";
-import { revealImplicitConstraints } from "../../../dist/modes/constraints.js";
+import { navigateSemanticDrift } from "@/src/modes/semantic-drift";
+import { activatePrismaticPerspective } from "@/src/modes/prismatic";
+import { applyNoveltyBias } from "@/src/modes/novelty";
+import { revealImplicitConstraints } from "@/src/modes/constraints";
 
 // Types
 import type {
@@ -41,7 +41,7 @@ import type {
   PrismaticPerspectiveParams,
   NoveltyBiasParams,
   ConstraintRevealerParams,
-} from "../../../dist/types.js";
+} from "@/src/types";
 
 // ============================================================================
 // Authentication Helper

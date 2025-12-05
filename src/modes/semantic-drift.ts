@@ -7,8 +7,8 @@ import {
   SemanticDriftParams,
   SemanticDriftResponse,
   DriftMode,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Anchor Strength Calculation

@@ -16,19 +16,19 @@ import {
   createSession,
   adjustDose,
   getActiveSession,
-} from "./session.js";
+} from "./session";
 
 // Mode implementations - Batch 1
-import { activateSynestheticMode } from "./modes/synesthetic.js";
-import { setAssociativeDepth } from "./modes/associative.js";
-import { dissolveCategoryBoundaries } from "./modes/boundaries.js";
-import { amplifyPatternRecognition } from "./modes/patterns.js";
+import { activateSynestheticMode } from "./modes/synesthetic";
+import { setAssociativeDepth } from "./modes/associative";
+import { dissolveCategoryBoundaries } from "./modes/boundaries";
+import { amplifyPatternRecognition } from "./modes/patterns";
 
 // Mode implementations - Batch 2
-import { navigateSemanticDrift } from "./modes/semantic-drift.js";
-import { activatePrismaticPerspective } from "./modes/prismatic.js";
-import { applyNoveltyBias } from "./modes/novelty.js";
-import { revealImplicitConstraints } from "./modes/constraints.js";
+import { navigateSemanticDrift } from "./modes/semantic-drift";
+import { activatePrismaticPerspective } from "./modes/prismatic";
+import { applyNoveltyBias } from "./modes/novelty";
+import { revealImplicitConstraints } from "./modes/constraints";
 
 // Types
 import type {
@@ -42,7 +42,7 @@ import type {
   PrismaticPerspectiveParams,
   NoveltyBiasParams,
   ConstraintRevealerParams,
-} from "./types.js";
+} from "./types";
 
 // ============================================================================
 // Server Instance

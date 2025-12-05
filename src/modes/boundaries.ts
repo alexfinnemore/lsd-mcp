@@ -6,8 +6,8 @@
 import {
   BoundaryDissolutionParams,
   BoundaryDissolutionResponse,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Boundary Permeability Calculation

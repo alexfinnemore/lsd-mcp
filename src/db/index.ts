@@ -3,43 +3,25 @@
 // Neon Serverless Postgres with Drizzle ORM
 // ============================================================================
 
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import * as schema from "./schema.js";
-
-// ============================================================================
-// Database Connection
-// ============================================================================
-
-// Get connection string from environment
-const connectionString = process.env.DATABASE_URL;
-
-// Create database instance (lazy initialization for serverless)
-let _db: ReturnType<typeof drizzle> | null = null;
-
-export function getDb() {
-  if (!connectionString) {
-    throw new Error(
-      "DATABASE_URL environment variable is not set. " +
-      "Please configure your Neon database connection string."
-    );
-  }
-
-  if (!_db) {
-    const sql = neon(connectionString);
-    _db = drizzle(sql, { schema });
-  }
-
-  return _db;
-}
+// NOTE: Database imports are disabled due to drizzle-orm/webpack incompatibility
+// The session-storage.ts uses in-memory storage when isRemoteMode() returns false
 
 // ============================================================================
 // Check if running in serverless/remote mode
 // ============================================================================
 
 export function isRemoteMode(): boolean {
-  return !!process.env.DATABASE_URL && !!process.env.VERCEL;
+  // TODO: Re-enable when drizzle-orm/webpack compatibility is fixed
+  // return !!process.env.DATABASE_URL && !!process.env.VERCEL;
+  return false;
 }
 
-// Re-export schema for convenience
-export * from "./schema.js";
+// Placeholder database function - not used when isRemoteMode() returns false
+export function getDb(): never {
+  throw new Error("Database not available - running in local mode");
+}
+
+// Placeholder types - not used when isRemoteMode() returns false
+export const sessions = null as any;
+export type Session = any;
+export type NewSession = any;

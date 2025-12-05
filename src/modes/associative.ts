@@ -7,8 +7,8 @@ import {
   AssociativeDepthParams,
   AssociativeDepthResponse,
   AssociativeMode,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Association Distance Calculation

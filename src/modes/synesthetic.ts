@@ -8,8 +8,8 @@ import {
   SynestheticModeResponse,
   SensoryDomain,
   TargetScope,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Directive Generation by Intensity Level

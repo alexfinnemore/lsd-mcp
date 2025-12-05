@@ -7,8 +7,8 @@ import {
   PatternAmplificationParams,
   PatternAmplificationResponse,
   PatternType,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Pattern Sensitivity Calculation

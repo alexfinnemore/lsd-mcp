@@ -6,8 +6,8 @@
 import {
   PrismaticPerspectiveParams,
   PrismaticPerspectiveResponse,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Perspective Count Calculation

@@ -7,8 +7,8 @@ import {
   ConstraintRevealerParams,
   ConstraintRevealerResponse,
   ConstraintType,
-} from "../types.js";
-import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session.js";
+} from "../types";
+import { ensureSession, setCurrentMode, getHighDoseWarning } from "../session";
 
 // ============================================================================
 // Default Constraint Types
